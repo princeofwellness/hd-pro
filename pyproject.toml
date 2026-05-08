@@ -1,0 +1,20 @@
+[project]
+name = "hd-pro"
+version = "1.0.0"
+description = "Production Human Design engine — Swiss Ephemeris, 100% accurate"
+readme = "README.md"
+license = {text = "MIT"}
+authors = [{name = "Research Lab"}]
+keywords = ["human-design", "bodygraph", "astrology", "i-ching"]
+requires-python = ">=3.10"
+dependencies = [
+    "pyhd",
+    "pyswisseph",
+]
+
+[project.scripts]
+hd-pro = "hd_pro.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/princeofwellness/hd-pro"
+Source = "https://github.com/princeofwellness/hd-pro"
