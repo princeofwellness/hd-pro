@@ -53,7 +53,7 @@ def gh_search(query: str, limit: int = 10, sort: str = "stars") -> list[dict]:
             ["gh", "search", "repos", query,
              "--sort", sort,
              "--limit", str(limit),
-             "--json", "name,owner,url,stargazersCount,language,description,updatedAt,topics,fork"],
+             "--json", "name,fullName,url,stargazersCount,language,description,updatedAt,createdAt,forksCount,isArchived,isFork,license"],
             capture_output=True, text=True, timeout=30
         )
         if result.returncode != 0:
@@ -61,6 +61,9 @@ def gh_search(query: str, limit: int = 10, sort: str = "stars") -> list[dict]:
         repos = json.loads(result.stdout)
         for r in repos:
             r["_scanned_at"] = datetime.now(timezone.utc).isoformat()
+            # Normalize field names
+            if "fullName" in r:
+                r["full_name"] = r.pop("fullName")
         return repos
     except Exception as e:
         return [{"error": str(e), "query": query}]
